@@ -1,4 +1,5 @@
 from modelos.avaliacao import Avaliacao
+from modelos.cardapio.item_cardapio import ItemCardapio
 class Restaurante:
     restaurantes=[]
     #F2 troca em todos os lugares necessarios com aquele argumento
@@ -13,6 +14,7 @@ class Restaurante:
         self._ativo = False
 
         self._avaliacao = []
+        self._cardapio = []
         Restaurante.restaurantes.append(self)
     #__str__ faz a classe ser mostrada como uma string
     def __str__(self):
@@ -47,3 +49,22 @@ class Restaurante:
         #round quantidade de casas decimais 
         media = round(soma_das_notas / quantidade_de_notas, 1)
         return media
+
+    def adicionar_item_cardapio(self,item):
+        if isinstance(item,ItemCardapio):
+            self._cardapio.append(item)
+
+    @property
+    def exibir_cardapio(self):
+        print(f"Cardapio do Restaurante {self._nome}\n")
+        # i,item in enumerate faz a contagem dos itens da lista
+        for i,item in enumerate(self._cardapio,start=1):
+            if hasattr(item,"tamanho"):
+                mensagem_bebida = f"{i}. Nome: {item._nome} | Preço: R$ {item._preco} | Tamanho: {item.tamanho}"
+                print(mensagem_bebida)
+            else:
+                    mensagem_prato = f"{i}. Nome: {item._nome} | Preço:R${item._preco} | Descrição: {item.descricao}"
+                    print(mensagem_prato)
+
+
+    
